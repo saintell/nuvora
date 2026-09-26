@@ -228,6 +228,7 @@ El usuario deberá poder, como mínimo:
 
 - consultar movimientos previamente disponibles;
 - registrar gastos e ingresos manualmente;
+- registrar transferencias propias manualmente;
 - corregir movimientos;
 - consultar los resúmenes que puedan calcularse con los datos disponibles.
 

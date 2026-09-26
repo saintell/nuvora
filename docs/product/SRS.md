@@ -306,11 +306,11 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 - **Referencia al PRD:** 8.2.2.
 
 #### RF-OFF-002 — Registro manual sin conexión
-- **Descripción:** El usuario debe poder registrar gastos e ingresos manualmente sin Internet.
+- **Descripción:** El usuario debe poder registrar gastos, ingresos y transferencias propias manualmente sin Internet.
 - **Prioridad:** MUST
 - **Precondiciones:** Aplicación disponible sin conexión.
-- **Resultado esperado:** Los movimientos válidos quedan conservados localmente y participan en cálculos.
-- **Criterios de aceptación:** La falta de conexión no impide confirmar un gasto o ingreso manual válido.
+- **Resultado esperado:** Los movimientos válidos quedan conservados localmente y se reflejan en el historial y los cálculos según las reglas de su tipo.
+- **Criterios de aceptación:** La falta de conexión no impide confirmar un gasto, ingreso o transferencia propia manual válida.
 - **Referencia al PRD:** 8.2.2.
 
 #### RF-OFF-003 — Gestión sin conexión
@@ -657,13 +657,15 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 
 ### 8.6 Accesibilidad
 
+La referencia aprobada para el diseño del MVP es WCAG 2.2 nivel AA. La conformidad real se verificará posteriormente mediante pruebas de la implementación; esta especificación no la declara alcanzada.
+
 | ID | Requisito verificable | Prioridad | Referencia |
 | --- | --- | --- | --- |
-| RNF-ACC-001 | El texto y los importes deben permanecer legibles en los tamaños de visualización admitidos; mínimos exactos en TBD-008. | MUST | VISION “experiencia accesible” |
-| RNF-ACC-002 | Texto, controles e indicadores deben mantener contraste suficiente; el umbral aplicable está en TBD-008. | MUST | VISION “evolución sencilla y accesible” |
-| RNF-ACC-003 | Los controles táctiles deben disponer de un área operable adecuada; el mínimo exacto está en TBD-008. | MUST | PRD 6 |
-| RNF-ACC-004 | Las acciones y datos esenciales deben exponer nombre, estado y orden comprensibles a tecnologías de accesibilidad compatibles. | MUST | VISION “accesible” |
-| RNF-ACC-005 | Ningún estado, error, categoría o resultado debe comunicarse exclusivamente mediante color. | MUST | VISION “claridad” |
+| RNF-ACC-001 | El texto y los importes deben permanecer legibles con escalado de texto hasta 200 %, sin pérdida de contenido o funcionalidad esencial ni truncamiento de información financiera esencial. | MUST | VISION “experiencia accesible” |
+| RNF-ACC-002 | El texto normal debe mantener contraste mínimo de 4.5:1 y el texto grande de 3:1; controles e indicadores se evaluarán conforme a WCAG 2.2 AA en sus combinaciones reales. | MUST | VISION “evolución sencilla y accesible” |
+| RNF-ACC-003 | Los controles táctiles deben tener un área operable efectiva mínima de 48 × 48 dp; ninguna acción crítica debe depender exclusivamente de un gesto. | MUST | PRD 6 |
+| RNF-ACC-004 | Las acciones y datos esenciales deben exponer nombre, rol, valor y/o estado según corresponda y un orden comprensible a tecnologías de accesibilidad compatibles; el foco debe ser perceptible y los estados de inicio, fin, procesamiento y error de voz deben tener señales accesibles además de la visual. | MUST | VISION “accesible” |
+| RNF-ACC-005 | Ningún estado, error, categoría, tipo de movimiento o resultado financiero debe comunicarse exclusivamente mediante color. | MUST | VISION “claridad” |
 
 ### 8.7 Compatibilidad
 
@@ -688,7 +690,7 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 | Categoría ausente en un ingreso | Impedir el guardado hasta seleccionar una categoría válida del catálogo de ingresos. | RF-MOV-006, RN-013 |
 | Categoría incompatible con el tipo | Invalidar la selección y requerir una del catálogo correspondiente. | RF-CAT-003 |
 | Fecha efectiva ausente o inválida | Impedir el guardado, solicitar una fecha válida y no modificar historial ni resúmenes. | RF-MOV-009, RN-012 |
-| Pérdida de conexión durante una función esencial | Mantener disponibles consulta, registro manual, edición, eliminación y resúmenes calculables. | RF-OFF-001–004 |
+| Pérdida de conexión durante una función esencial | Mantener disponibles consulta, registro manual de gastos, ingresos y transferencias propias, edición, eliminación y resúmenes calculables. | RF-OFF-001–004, RF-MOV-004 |
 | Pérdida de conexión durante voz o IA | Informar indisponibilidad o fallo, no guardar propuestas y permitir salida o alternativa manual. | RF-VOZ-006, RF-OFF-004 |
 | Fallo de Speech-to-Text | No generar una interpretación como exitosa; permitir reintentar, cancelar o continuar manualmente. | RF-VOZ-004, RF-VOZ-006 |
 | Transcripción vacía | Tratarla como fallo y no crear movimiento. | RF-VOZ-004 |
@@ -740,7 +742,7 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 | 8.1 Hipótesis del MVP | RF-ONB-001–004, RN-001, RNF-COMP-001–002 |
 | 8.2 Capacidades incluidas | RF-ONB-001–004, RF-MOV-001–009, RF-GES-001–005, RF-CAT-001–004, RF-PER-001–003, RF-DASH-001–007, RF-VOZ-001–007, RF-IA-001–005, RF-CONF-001–005, RF-AUT-001–004 |
 | 8.2.1 Captura por voz | RF-VOZ-007, RN-009 |
-| 8.2.2 Funcionamiento sin conexión | RF-OFF-001–004, RNF-PERF-003, RNF-COMP-003 |
+| 8.2.2 Funcionamiento sin conexión | RF-OFF-001–004, RF-MOV-004, RNF-PERF-003, RNF-COMP-003 |
 | 8.3 Capacidades excluidas | RF-CAT-004, RF-AUT-004, sección 10 |
 | 9.1 V1 | Sección 10 para reembolsos y demás capacidades futuras |
 | 10. Fuera de alcance | Sección 10, RN-011 |
@@ -761,7 +763,6 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 | TBD-005 | Políticas de conservación y eliminación de audio, transcripciones, movimientos y correcciones. | RNF-PRIV-003–005, RF-VOZ-003–005 |
 | TBD-006 | Metas numéricas y condiciones de medición de respuesta, carga y cálculo. | RNF-PERF-001–003 |
 | TBD-007 | Versión mínima y rango de versiones Android compatibles. | RNF-COMP-001, RNF-COMP-003 |
-| TBD-008 | Estándar y umbrales cuantitativos de legibilidad, contraste y tamaño táctil. | RNF-ACC-001–005 |
 | TBD-009 | Objetivos numéricos, ventanas y línea base para métricas de activación, velocidad, calidad, recurrencia y retención. | RF-ANA-001–003, RNF-UX-004 |
 | TBD-010 | Estrategia futura de sincronización, resolución de conflictos, backup y recuperación. | Fuera del MVP; RF-PER-001–003 como restricción de continuidad actual |
 | TBD-011 | Política futura de cuenta opcional y condiciones para solicitarla sin impedir valor previo. | RF-ONB-001; fuera del MVP |
@@ -772,6 +773,6 @@ Las prioridades siguen MoSCoW: **MUST** es indispensable para el MVP, **SHOULD**
 - **Requisitos funcionales:** 60.
 - **Requisitos no funcionales:** 30.
 - **Reglas de negocio:** 13.
-- **Decisiones pendientes:** 12.
+- **Decisiones pendientes:** 11.
 - **Inconsistencias entre VISION.md y PRD.md:** ninguna contradicción directa identificada.
 - **Contradicciones restantes entre PRD.md y SRS.md:** ninguna identificada; la asociación y el tratamiento de reembolsos están explícitamente fuera del MVP en ambos documentos.
