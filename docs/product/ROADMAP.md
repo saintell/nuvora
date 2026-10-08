@@ -27,18 +27,18 @@ Los hitos indican orden lógico y condiciones de avance, no duración. Una decis
 ### Hito 0 — Foundation
 
 - **Objetivo:** cerrar las decisiones fundamentales del MVP antes del desarrollo funcional.
-- **Capacidades y entregables:** `VISION.md`, `PRD.md`, `SRS.md` y `ROADMAP.md` — completados; `USER_FLOWS.md`, `DESIGN_SYSTEM.md`, `ARCHITECTURE.md`, `DATABASE.md`, `API.md`, `ENVIRONMENTS.md`, `SECURITY.md`, `TESTING.md`, `AGENTS.md` y `README.md` — pendientes dentro de Sprint 0. Esta relación no prescribe el contenido de los documentos pendientes.
+- **Capacidades y entregables:** `VISION.md`, `PRD.md`, `SRS.md`, `ROADMAP.md`, `USER_FLOWS.md`, `DESIGN_SYSTEM.md`, `ARCHITECTURE.md`, `DATABASE.md`, `API.md`, `ENVIRONMENTS.md`, `SECURITY.md`, `TESTING.md`, `AGENTS.md` y `README.md` — completados.
 - **Dependencias:** visión, alcance y requisitos aprobados; identificar las decisiones del SRS necesarias antes de implementar cada capacidad.
-- **Requisitos SRS relacionados:** sección 12 (TBD-001–011 y TBD-014); `RNF-COMP-001`, `RNF-ACC-001–005`, `RNF-PRIV-003–005` como insumos para decisiones posteriores. Este hito no implementa requisitos funcionales.
+- **Requisitos SRS relacionados:** sección 12 (decisiones TBD aún pendientes); `RNF-COMP-001`, `RNF-ACC-001–005`, `RNF-PRIV-003–005` como insumos para decisiones posteriores. Este hito no implementa requisitos funcionales.
 - **Definition of Done:** las decisiones fundamentales permiten iniciar la implementación sin inventar arquitectura ni requisitos durante el desarrollo; las decisiones que dependen de evidencia posterior quedan identificadas con su hito afectado.
 
 ### Hito 1 — Walking skeleton
 
-- **Objetivo:** demostrar que la base técnica mínima de la aplicación funciona de forma integrada y permite construir el primer flujo vertical del MVP.
+- **Objetivo:** demostrar que la estructura mínima del proyecto funciona de extremo a extremo.
 - **Capacidades:** aplicación Android ejecutable, estructura base, navegación mínima, configuración inicial de ambientes, mecanismo de persistencia disponible y validación básica del proyecto; pipeline técnico mínimo solo si las decisiones posteriores de arquitectura o pruebas lo requieren. Aún no incluye todas las funciones financieras.
-- **Dependencias:** cierre de Foundation y de la compatibilidad Android necesaria para iniciar una base verificable (`TBD-007`).
-- **Requisitos SRS relacionados:** `RNF-COMP-001–002`, `RNF-PERF-001` y `RNF-MANT-001`; prepara `RF-PER-001–003`, sin darlos por cumplidos antes de probar movimientos reales.
-- **Definition of Done:** la aplicación inicia en un dispositivo Android compatible, permite recorrer su navegación mínima y demuestra que las capacidades técnicas mínimas definidas posteriormente por la arquitectura están disponibles para construir y validar el primer flujo vertical. Este hito no obliga por sí mismo a introducir servicios remotos o backend.
+- **Dependencias:** Foundation cerrada y compatibilidad Android definida en el SRS: Android 10 (API 29) o superior.
+- **Requisitos SRS relacionados:** `RNF-COMP-001–002`, `RNF-PERF-001` y `RNF-MANT-002`; prepara `RF-PER-001–003`, sin darlos por cumplidos antes de probar movimientos reales.
+- **Definition of Done:** la aplicación inicia en un dispositivo Android compatible, permite recorrer su navegación mínima y demuestra que la base técnica y el mecanismo de persistencia están disponibles para el primer flujo vertical.
 
 ### Hito 2 — Núcleo de movimientos manuales
 
@@ -48,12 +48,12 @@ Los hitos indican orden lógico y condiciones de avance, no duración. Una decis
 - **Requisitos SRS relacionados:** `RF-ONB-001–004`, `RF-MOV-001–009`, `RF-GES-001–004`, `RF-CAT-001–004`, `RF-PER-001–003`, `RN-001–006`, `RN-011–013`, `RNF-REL-001–002` y `RNF-UX-001–004`.
 - **Definition of Done:** una persona inicia sin cuenta, registra y gestiona cada tipo de movimiento; entradas inválidas no alteran los datos; los movimientos confirmados sobreviven al cierre y reinicio, y las acciones fallidas no dejan datos parciales.
 
-### Hito 3 — Dashboard y análisis mensual
+### Hito 3 — Historial y dashboard
 
 - **Objetivo:** convertir movimientos válidos en información mensual útil y verificable.
-- **Capacidades:** evolución del historial básico hacia consulta por períodos mensuales; selección del mes actual y de meses anteriores con movimientos; cálculo de ingresos, gastos, resultado neto y distribución de gastos por categoría; estados vacíos y comparaciones únicamente cuando exista historial suficiente. La fecha efectiva determina el período y las transferencias propias se excluyen de los totales.
+- **Capacidades:** historial consultable, selección del mes actual y de meses anteriores con movimientos, ingresos, gastos, resultado neto y distribución de gastos por categoría; estados vacíos y comparaciones solo con historial suficiente. La fecha efectiva determina el período y las transferencias propias se excluyen de los totales.
 - **Dependencias:** hito 2 y reglas financieras deterministas; definir el criterio de historial suficiente (`TBD-004`) antes de aceptar comparaciones.
-- **Requisitos SRS relacionados:** `RF-GES-001–005`, `RF-DASH-001–007`, `RN-005–007`, `RN-010`, `RN-012`, `RNF-REL-003` y `RNF-MANT-001`.
+- **Requisitos SRS relacionados:** `RF-GES-001–005`, `RF-DASH-001–007`, `RN-005–007`, `RN-010`, `RN-012`, `RNF-REL-003` y `RNF-MANT-002`.
 - **Definition of Done:** el usuario puede responder cuánto ingresó, cuánto gastó, cuál fue el resultado neto y en qué categorías gastó; crear, editar o eliminar movimientos actualiza los períodos afectados; un historial vacío y uno insuficiente no generan tendencias ficticias.
 
 ### Hito 4 — Experiencia offline y robustez
@@ -92,7 +92,7 @@ Los hitos indican orden lógico y condiciones de avance, no duración. Una decis
 
 - **Objetivo:** preparar un producto confiable para su validación con usuarios reales.
 - **Capacidades:** revisión completa de los requisitos `MUST` aplicables al MVP y de las reglas financieras; pruebas funcionales, offline, de errores, accesibilidad, privacidad, seguridad, rendimiento, permisos y calidad de voz e interpretación; corrección de defectos críticos.
-- **Dependencias:** hitos 1 a 7; decisiones de rendimiento (`TBD-006`), compatibilidad (`TBD-007`), accesibilidad (`TBD-008`) y tratamiento de datos (`TBD-005`, `TBD-014`) necesarias para aceptar las capacidades correspondientes.
+- **Dependencias:** hitos 1 a 7; decisiones de rendimiento (`TBD-006`), accesibilidad (`TBD-008`) y tratamiento de datos (`TBD-005`, `TBD-014`) necesarias para aceptar las capacidades correspondientes.
 - **Requisitos SRS relacionados:** todos los `MUST` aplicables de las secciones 6 a 8, en particular `RN-001–013` y `RNF-UX`, `RNF-PERF`, `RNF-REL`, `RNF-SEC`, `RNF-PRIV`, `RNF-ACC`, `RNF-COMP` y `RNF-MANT`.
 - **Definition of Done:** cada `MUST` aplicable del MVP está implementado y probado; cualquier excepción tiene una decisión explícita documentada y no se considera satisfecha sin ajustar el alcance aprobado. No hay defectos críticos conocidos que comprometan datos financieros, control del usuario u operación esencial offline.
 
@@ -135,7 +135,6 @@ La secuencia crítica es **Foundation → aplicación ejecutable → movimientos
 | `TBD-004` | Hito 3: criterio de historial suficiente antes de presentar comparaciones. |
 | `TBD-005` | Hitos 5, 6 y 8: conservación y eliminación de audio, transcripciones, movimientos y correcciones. |
 | `TBD-006` | Hitos 1 y 8: metas y condiciones de medición del rendimiento. |
-| `TBD-007` | Hitos 1, 4 y 8: rango de Android compatible. |
 | `TBD-008` | Hito 8, con aplicación desde los flujos iniciales: estándar y umbrales de accesibilidad. |
 | `TBD-009` | Hitos 7 y 9: objetivos, ventanas y línea base de las métricas; su definición puede requerir evidencia del MVP. |
 | `TBD-014` | Hitos 4, 5, 6 y 8: conectividad, consentimiento e información y tratamiento externo de voz e IA. |
