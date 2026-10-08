@@ -20,9 +20,9 @@ El alcance es el MVP para Android en Colombia, en español y exclusivamente en C
 - Permitir empezar sin cuenta y mantener el registro manual disponible, incluso si fallan voz, IA o la conexión.
 - Conservar el control del usuario: revisar, corregir, confirmar o cancelar. Una sugerencia automática nunca modifica datos por sí sola.
 - Comunicar el estado de las operaciones y sus fallos sin dejar dudas sobre si un movimiento quedó guardado. Una acción fallida conserva el último estado válido y no produce duplicados.
-- Mantener apertura, historial, registro manual de gastos, ingresos y transferencias propias, gestión de movimientos y resúmenes calculables sin Internet.
+- Mantener apertura, historial, registro manual de gastos e ingresos, gestión de movimientos y resúmenes calculables sin Internet.
 - Expresar incertidumbre y ausencias sin inventar datos. La IA interpreta; las reglas financieras determinan validez, totales y agrupaciones.
-- Identificar el **resultado neto del período** como ingresos contabilizables menos gastos contabilizables. No presentarlo como saldo bancario disponible.
+- Identificar el **resultado neto del período** como ingresos registrados menos gastos registrados. No presentarlo como saldo bancario disponible.
 - Utilizar lenguaje cotidiano colombiano y comunicar estados, errores y resultados de manera comprensible, también para tecnologías de accesibilidad compatibles, sin depender solo del color. Los umbrales visuales y táctiles siguen pendientes en TBD-008.
 
 ## 4. Mapa general del MVP
@@ -96,12 +96,12 @@ flowchart TD
 
 - **Objetivo:** registrar un traslado de dinero propio sin tratarlo como ingreso o gasto.
 - **Punto de entrada:** acción de registrar movimiento.
-- **Precondiciones:** registro manual disponible, con o sin conexión.
+- **Precondiciones:** registro manual disponible.
 - **Flujo principal:** 1. La persona elige **transferencia propia**. 2. Introduce un monto válido en COP y revisa o modifica la fecha efectiva inicialmente actual. 3. Puede añadir un concepto. 4. Nuvora valida monto y fecha, sin solicitar categoría de gastos o ingresos. 5. La persona confirma. 6. Tras guardarse, la transferencia aparece en el historial; los totales de ingresos, gastos y resultado neto no cambian.
 - **Alternativas:** omitir concepto o cancelar sin guardar. No se requieren cuentas de origen y destino en este MVP.
 - **Errores relevantes:** monto inválido, fecha inválida o fallo de guardado; se mantiene el estado anterior.
 - **Resultado:** transferencia consultable, excluida de los totales financieros.
-- **Requisitos SRS relacionados:** RF-MOV-001, RF-MOV-004–009, RF-CAT-003, RF-GES-001, RF-PER-003, RF-OFF-002, RF-ANA-001; RN-001, RN-005–006, RN-012.
+- **Requisitos SRS relacionados:** RF-MOV-001, RF-MOV-004–009, RF-CAT-003, RF-GES-001, RF-PER-003, RF-ANA-001; RN-001, RN-005–006, RN-012.
 
 ### UF-005 — Consultar historial
 
@@ -242,11 +242,11 @@ flowchart TD
 - **Objetivo:** continuar el uso financiero esencial cuando no hay Internet.
 - **Punto de entrada:** apertura o uso de Nuvora sin conexión, o pérdida de conexión durante una sesión.
 - **Precondiciones:** aplicación disponible en un dispositivo Android compatible; para consultar o editar, existen datos previamente disponibles.
-- **Flujo principal:** 1. La persona abre Nuvora y consulta historial y movimientos disponibles. 2. Puede registrar gastos, ingresos y transferencias propias manualmente y editar o eliminar movimientos disponibles. 3. Nuvora valida, conserva y refleja las operaciones exitosas con las mismas reglas financieras que en línea. 4. Presenta el dashboard calculado con los datos disponibles y mantiene los movimientos confirmados al cerrar, reabrir o reiniciar.
+- **Flujo principal:** 1. La persona abre Nuvora y consulta historial y movimientos disponibles. 2. Puede registrar gastos e ingresos manualmente y editar o eliminar movimientos disponibles. 3. Nuvora valida, conserva y refleja las operaciones exitosas con las mismas reglas financieras que en línea. 4. Presenta el dashboard calculado con los datos disponibles y mantiene los movimientos confirmados al cerrar, reabrir o reiniciar.
 - **Alternativas:** si voz o IA requieren conexión conforme a TBD-014, Nuvora informa su indisponibilidad y ofrece registro manual; no crea datos supuestos ni promete una transcripción o interpretación inexistente. Un historial vacío sigue siendo un estado válido.
 - **Errores relevantes:** una operación local fallida no deja datos parciales ni resúmenes divergentes; perder conexión durante voz o IA no bloquea el registro manual.
 - **Resultado:** captura manual, gestión, consulta y resúmenes siguen disponibles sin Internet; voz e IA fallan de forma segura cuando dependan de él.
-- **Requisitos SRS relacionados:** RF-OFF-001–004, RF-PER-001–003, RF-GES-001–005, RF-MOV-002–004, RF-DASH-001–004, RF-VOZ-006, RNF-PERF-003, RNF-COMP-003, RNF-REL-001–005.
+- **Requisitos SRS relacionados:** RF-OFF-001–004, RF-PER-001–003, RF-GES-001–005, RF-MOV-002–003, RF-DASH-001–004, RF-VOZ-006, RNF-PERF-003, RNF-COMP-003, RNF-REL-001–005.
 
 ## 6. Flujos de error y recuperación
 
@@ -256,7 +256,7 @@ flowchart TD
 | Categoría obligatoria ausente o incompatible | No guardar el gasto o ingreso; indicar la clasificación requerida del catálogo correcto. | Elegir categoría válida; subcategoría de gasto puede omitirse. |
 | Fecha efectiva ausente o inválida | Impedir guardado y conservar los períodos previos. | Indicar una fecha válida y confirmar de nuevo. |
 | Fallo al guardar, editar o eliminar | Comunicar que la operación no terminó; conservar el último movimiento y resumen válidos, sin datos parciales. | Revisar los datos disponibles y reintentar mediante una acción explícita. |
-| Pérdida de conexión | Mantener consulta, registro manual de gastos, ingresos y transferencias propias, gestión de movimientos y cálculos locales; identificar voz o IA indisponibles si requieren red. | Continuar manualmente; reintentar voz o IA cuando estén disponibles. |
+| Pérdida de conexión | Mantener consulta, registro manual y cálculos locales; identificar voz o IA indisponibles si requieren red. | Continuar manualmente; reintentar voz o IA cuando estén disponibles. |
 | Permiso de micrófono rechazado | No iniciar captura ni crear movimiento. | Conceder la autorización aplicable en un nuevo intento o registrar manualmente. |
 | Conversión de voz a texto fallida | Informar el fallo sin presentar una transcripción exitosa. | Reintentar, cancelar o continuar manualmente con contexto útil. |
 | Transcripción vacía | Tratarla como fallo; no interpretar ni guardar. | Reintentar la captura o registrar manualmente. |
@@ -277,7 +277,7 @@ La tabla cubre los 60 requisitos funcionales del MVP. Los rangos inclusivos usan
 | UF-001 | RF-ONB-001–004, RF-GES-001 |
 | UF-002 | RF-MOV-001–002, RF-MOV-005–009, RF-CAT-001, RF-CAT-003–004, RF-PER-003, RF-GES-005, RF-ANA-001 |
 | UF-003 | RF-MOV-001, RF-MOV-003, RF-MOV-005–009, RF-CAT-002–004, RF-PER-003, RF-GES-005, RF-ANA-001 |
-| UF-004 | RF-MOV-001, RF-MOV-004–009, RF-GES-001, RF-PER-003, RF-OFF-002, RF-ANA-001 |
+| UF-004 | RF-MOV-001, RF-MOV-004–009, RF-GES-001, RF-PER-003, RF-ANA-001 |
 | UF-005 | RF-GES-001–002, RF-PER-001–002, RF-OFF-001 |
 | UF-006 | RF-GES-002–003, RF-GES-005, RF-MOV-005–007, RF-MOV-009, RF-CAT-003–004, RF-AUT-003, RF-PER-003, RF-OFF-003 |
 | UF-007 | RF-GES-002, RF-GES-004–005, RF-PER-003, RF-OFF-003 |
@@ -288,9 +288,9 @@ La tabla cubre los 60 requisitos funcionales del MVP. Los rangos inclusivos usan
 | UF-012 | RF-CONF-001–005, RF-IA-002–005, RF-PER-003, RF-ANA-002 |
 | UF-013 | RF-VOZ-007, RF-IA-001, RF-CONF-001–004 |
 | UF-014 | RF-AUT-001–004, RF-ANA-003, RF-CAT-001–004, RF-MOV-006, RF-GES-003 |
-| UF-015 | RF-OFF-001–004, RF-PER-001–003, RF-GES-001–005, RF-MOV-002–004, RF-DASH-001–004, RF-VOZ-006 |
+| UF-015 | RF-OFF-001–004, RF-PER-001–003, RF-GES-001–005, RF-MOV-002–003, RF-DASH-001–004, RF-VOZ-006 |
 
-Los requisitos de protección de datos y acceso mínimo **RNF-SEC-001–003**, los umbrales de legibilidad, contraste y área táctil **RNF-ACC-001–003**, el rango de Android y la exclusión de iOS **RNF-COMP-001–002**, y la consistencia interna de reglas **RNF-MANT-001** no se convierten en un paso de usuario independiente. Deben verificarse transversalmente durante diseño, implementación y pruebas, sin crear flujos ficticios. Los demás RNF aplicables se reflejan como condiciones o resultados de los recorridos, especialmente privacidad, accesibilidad semántica, respuesta visible, integridad y operación offline.
+Los requisitos de protección de datos y acceso mínimo **RNF-SEC-001–003**, los umbrales de legibilidad, contraste y área táctil **RNF-ACC-001–003**, el rango de Android y la exclusión de iOS **RNF-COMP-001–002**, y la consistencia interna de reglas **RNF-MANT-002** no se convierten en un paso de usuario independiente. Deben verificarse transversalmente durante diseño, implementación y pruebas, sin crear flujos ficticios. Los demás RNF aplicables se reflejan como condiciones o resultados de los recorridos, especialmente privacidad, accesibilidad semántica, respuesta visible, integridad y operación offline.
 
 ## 8. Preguntas pendientes
 
@@ -303,6 +303,5 @@ Se conservan las decisiones del SRS que afectan estos recorridos. Ninguna se res
 | TBD-003 | ¿Qué criterios distinguen incertidumbre significativa en interpretación y categorización? | UF-011–012, UF-014 |
 | TBD-004 | ¿Cuándo hay historial suficiente y comparable para presentar tendencias? | UF-008–009 |
 | TBD-005 | ¿Qué se conserva y elimina de audio, transcripciones, movimientos y correcciones, y cómo se informa? | UF-005–007, UF-010–012, UF-015 |
-| TBD-007 | ¿Qué rango de versiones Android debe admitir estos recorridos? | UF-001–015 |
 | TBD-008 | ¿Qué estándar y umbrales de accesibilidad regirán legibilidad, contraste y operación táctil? | UF-001–015 |
 | TBD-014 | ¿Qué condiciones de conexión, consentimiento, información enviada y tratamiento externo aplican a voz e IA? | UF-010–015 |
