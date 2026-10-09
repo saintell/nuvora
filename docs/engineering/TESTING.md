@@ -111,7 +111,7 @@ Los eventos de producto deben distinguir registro manual iniciado, completado y 
 
 Medir, una vez cerrado `TBD-006`, apertura, registro y persistencia local, consulta del historial, cálculo del dashboard, operación de voz e interpretación remota en las condiciones aprobadas. Antes de fijar objetivos se puede reunir una línea base y detectar regresiones evidentes, sin convertir un número supuesto en gate. Las operaciones financieras locales no deben esperar servicios remotos; las operaciones pendientes muestran progreso y permiten salida segura.
 
-Una vez cerrado `TBD-007`, verificar la versión mínima Android y al menos una versión representativa más reciente, especialmente SQLite, permisos de micrófono, almacenamiento privado, exclusiones de backup, reinicio y offline. No se exige una gran granja de dispositivos. iOS no es criterio de aceptación del MVP.
+Con la compatibilidad Android ya definida en `RNF-COMP-001` como Android 10 (API 29) o superior, verificar la versión mínima Android y al menos una versión representativa más reciente, especialmente SQLite, permisos de micrófono, almacenamiento privado, exclusiones de backup, reinicio y offline. No se exige una gran granja de dispositivos. iOS no es criterio de aceptación del MVP.
 
 Usar fixtures o builders pequeños con movimientos y audios ficticios, sin bases Production, logs financieros reales ni transcripciones identificables. Los casos que dependan de fecha actual sugerida, `reference_datetime`, `created_at`, `updated_at` o expresiones relativas usan tiempo fijo/controlable, por ejemplo `2026-09-26T12:00:00-05:00`; no dependen del día real de ejecución. Aislar SQLite por prueba o suite y controlar las respuestas externas.
 
@@ -152,10 +152,10 @@ Los grupos siguientes orientan la evidencia sin copiar cada caso del SRS. «Prin
 
 | Grupo | RF y RN relevantes | RNF relevantes | Nivel principal |
 | --- | --- | --- | --- |
-| Inicio y movimientos manuales | `RF-ONB-001–004`, `RF-MOV-001–009`, `RN-001–003`, `RN-013` | `RNF-UX-001–004`, `RNF-REL-004`, `RNF-MANT-001` | Unitarias, Application y mobile |
-| Categorías y transferencias | `RF-CAT-001–004`, `RF-MOV-004`, `RN-002–006`, `RN-011`, `RN-013` | `RNF-REL-003`, `RNF-MANT-001` | Unitarias y Application |
+| Inicio y movimientos manuales | `RF-ONB-001–004`, `RF-MOV-001–009`, `RN-001–003`, `RN-013` | `RNF-UX-001–004`, `RNF-REL-004`, `RNF-MANT-002` | Unitarias, Application y mobile |
+| Categorías y transferencias | `RF-CAT-001–004`, `RF-MOV-004`, `RN-002–006`, `RN-011`, `RN-013` | `RNF-REL-003`, `RNF-MANT-002` | Unitarias y Application |
 | Gestión y persistencia | `RF-GES-001–005`, `RF-PER-001–003`, `RN-012` | `RNF-REL-001–005`, `RNF-SEC-004` | Application, SQLite y Android |
-| Dashboard y períodos | `RF-DASH-001–007`, `RN-005–007`, `RN-010`, `RN-012` | `RNF-REL-003`, `RNF-MANT-001` | Unitarias, SQLite y mobile |
+| Dashboard y períodos | `RF-DASH-001–007`, `RN-005–007`, `RN-010`, `RN-012` | `RNF-REL-003`, `RNF-MANT-002` | Unitarias, SQLite y mobile |
 | Offline y compatibilidad | `RF-OFF-001–004`, `RF-PER-001–002` | `RNF-PERF-003`, `RNF-COMP-001–003` | Android integrado y E2E |
 | Voz | `RF-VOZ-001–007`, `RN-009` | `RNF-PRIV-001–005`, `RNF-PERF-002`, `RNF-ACC-004` | Mobile, API y E2E |
 | IA y confirmación | `RF-IA-001–005`, `RF-CONF-001–005`, `RN-008–009` | `RNF-REL-005`, `RNF-SEC-003–004` | Application, API y mobile |
@@ -167,7 +167,7 @@ Los grupos siguientes orientan la evidencia sin copiar cada caso del SRS. «Prin
 
 Una capacidad está terminada cuando cumple sus requisitos y reglas aplicables, tiene pruebas automatizadas en los niveles adecuados, evidencia real donde los dobles no demuestran el resultado, escenarios pertinentes de error y cancelación, y no rompe el núcleo offline. Debe cumplir seguridad, privacidad y accesibilidad aplicables; sus TBD necesarios deben estar resueltos y no debe tener defectos críticos conocidos.
 
-Para salir del hito 8 y comenzar el 9, todos los `MUST` aplicables deben estar implementados y verificados. Deben pasar las reglas financieras, CRUD e historial íntegros, persistencia y migraciones que preservan datos, offline, permisos, seguridad, privacidad, accesibilidad, compatibilidad Android conforme a `TBD-007`, rendimiento conforme a `TBD-006` y voz/IA con fallo seguro. Ninguna propuesta automática puede modificar datos sin confirmación. Un `MUST` cuya decisión previa necesaria siga abierta no se marca como satisfecho; cualquier excepción de alcance requiere decisión explícita conforme al roadmap. No se exige cero defectos de toda severidad, un SLA ni un porcentaje de cobertura.
+Para salir del hito 8 y comenzar el 9, todos los `MUST` aplicables deben estar implementados y verificados. Deben pasar las reglas financieras, CRUD e historial íntegros, persistencia y migraciones que preservan datos, offline, permisos, seguridad, privacidad, accesibilidad, compatibilidad Android conforme a `RNF-COMP-001`, rendimiento conforme a `TBD-006` y voz/IA con fallo seguro. Ninguna propuesta automática puede modificar datos sin confirmación. Un `MUST` cuya decisión previa necesaria siga abierta no se marca como satisfecho; cualquier excepción de alcance requiere decisión explícita conforme al roadmap. No se exige cero defectos de toda severidad, un SLA ni un porcentaje de cobertura.
 
 Son ejemplos de defectos críticos: pérdida o corrupción de movimientos confirmados; duplicación financiera involuntaria; totales o neto incorrectos; `own_transfer` contabilizada; guardado sin confirmación o propuesta de IA persistida automáticamente; migración destructiva; mensaje de éxito sin persistencia; exposición de secretos o envío inesperado del historial; imposibilidad general de usar el núcleo offline; y bypass de controles que comprometa datos de Production. No se introduce una escala corporativa de severidades.
 
@@ -180,7 +180,6 @@ Son ejemplos de defectos críticos: pérdida o corrupción de movimientos confir
 | `TBD-004` | Definir historial suficiente antes de aceptar comparaciones y tendencias. |
 | `TBD-005` | Concretar conservación, eliminación y comunicación de políticas para datos y artefactos de voz. |
 | `TBD-006` | Fijar metas y condiciones de medición de rendimiento antes de aplicar umbrales de aceptación. |
-| `TBD-007` | Definir rango Android y comprobar en él permisos, SQLite, almacenamiento, backup y offline. |
 | `TBD-009` | Fijar objetivos, ventanas y línea base de métricas sin confundirlos con la verificación de eventos. |
 | `TBD-014` | Concretar conectividad, información, autorización y tratamiento externo antes de aceptar voz/IA. |
 
